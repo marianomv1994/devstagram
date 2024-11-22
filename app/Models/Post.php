@@ -15,4 +15,23 @@ class Post extends Model
         'imagen',
         'user_id'
     ];
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class)->select(['name','username']);
+    }
+
+    public function comentarios()
+    {
+        return $this->hasMany(Comentario::class);
+    }
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+    public function checkLike(User $user)
+    {
+        return $this->likes->contains('user_id', $user->id);
+    }
 }
